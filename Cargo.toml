@@ -1,0 +1,16 @@
+[package]
+name = "poly2tri"
+version = "0.1.0"
+authors = ["Armin Ronacher <armin.ronacher@active-4.com>"]
+keywords = ["triangulation", "poly2tri"]
+description = "A binding to the c++ poly2tri library."
+homepage = "https://github.com/mitsuhiko/rust-poly2tri"
+license = "BSD-3-Clause"
+
+build = "build.rs"
+
+[dependencies]
+libc = "0.1"
+
+[build-dependencies]
+gcc = "0.3"
