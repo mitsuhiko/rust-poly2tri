@@ -12,5 +12,8 @@ fn build_clib() {
     cfg.cpp(true);
     cfg.include("vendor/poly2tri-cpp/poly2tri");
     cfg.file("src/binding.cpp");
+    if cfg!(target_os = "linux") {
+        cfg.flag("-std=c++11");
+    }
     cfg.compile("libpoly2tri.a");
 }
