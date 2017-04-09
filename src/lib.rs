@@ -185,6 +185,13 @@ impl TriangleVec {
         }
     }
 
+    pub fn triangles(&self) -> Triangles {
+        Triangles {
+            triangle_vec: self,
+            curr: 0,
+        }
+    }
+
     /// Returns a copy of the triangle at a certain point.
     pub fn get_triangle(&self, idx: usize) -> Triangle {
         assert!(idx < self.size(), "Out of range");
@@ -209,6 +216,24 @@ impl Drop for TriangleVec {
         unsafe {
             p2t_triangles_free(self.ll);
         }
+    }
+}
+
+pub struct Triangles<'a> {
+    triangle_vec: &'a TriangleVec,
+    curr: usize,
+}
+
+impl<'a> Iterator for Triangles<'a> {
+    type Item = Triangle;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.curr >= self.triangle_vec.size() {
+            return None;
+        }
+        let triangle = self.triangle_vec.get_triangle(self.curr);
+        self.curr += 1;
+        Some(triangle)
     }
 }
 
